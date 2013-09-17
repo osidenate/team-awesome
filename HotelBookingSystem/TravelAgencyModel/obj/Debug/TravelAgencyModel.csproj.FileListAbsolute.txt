@@ -1,0 +1,5 @@
+C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\TravelAgencyModel\bin\Debug\TravelAgencyModel.dll
+C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\TravelAgencyModel\bin\Debug\TravelAgencyModel.pdb
+C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.csprojResolveAssemblyReference.cache
+C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.dll
+C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.pdb

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MulticelBufferService.Service1" CodeBehind="MultiCellBufferService.svc.cs" %>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSupplierModel", "Hotel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderModel", "OrderModel\OrderModel.csproj", "{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MulticelBufferService", "MulticelBufferService\MulticelBufferService.csproj", "{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

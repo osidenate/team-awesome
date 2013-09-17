@@ -1,0 +1,5 @@
+C:\Projects\team-awesome\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.dll
+C:\Projects\team-awesome\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.pdb
+C:\Projects\team-awesome\HotelBookingSystem\OrderModel\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\team-awesome\HotelBookingSystem\OrderModel\obj\Debug\OrderModel.dll
+C:\Projects\team-awesome\HotelBookingSystem\OrderModel\obj\Debug\OrderModel.pdb

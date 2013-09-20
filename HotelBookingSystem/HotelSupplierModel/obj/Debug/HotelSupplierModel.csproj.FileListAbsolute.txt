@@ -1,9 +1,0 @@
-C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\HotelSupplierModel\bin\Debug\HotelSupplierModel.dll
-C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\HotelSupplierModel\bin\Debug\HotelSupplierModel.pdb
-C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\HotelSupplierModel\obj\Debug\HotelSupplierModel.dll
-C:\Users\Nathan\Dropbox\_src\CSE598_Assignment2\team-awesome\HotelBookingSystem\HotelSupplierModel\obj\Debug\HotelSupplierModel.pdb
-C:\Projects\team-awesome\HotelBookingSystem\HotelSupplierModel\bin\Debug\HotelSupplierModel.dll
-C:\Projects\team-awesome\HotelBookingSystem\HotelSupplierModel\bin\Debug\HotelSupplierModel.pdb
-C:\Projects\team-awesome\HotelBookingSystem\HotelSupplierModel\obj\Debug\ResolveAssemblyReference.cache
-C:\Projects\team-awesome\HotelBookingSystem\HotelSupplierModel\obj\Debug\HotelSupplierModel.dll
-C:\Projects\team-awesome\HotelBookingSystem\HotelSupplierModel\obj\Debug\HotelSupplierModel.pdb

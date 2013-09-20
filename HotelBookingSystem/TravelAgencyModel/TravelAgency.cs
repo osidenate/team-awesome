@@ -7,6 +7,9 @@ namespace TravelAgencyModel
 {
     public class TravelAgency
     {
-
+        public void NotifyPriceCut()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

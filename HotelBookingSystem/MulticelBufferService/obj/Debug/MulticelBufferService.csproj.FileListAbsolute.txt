@@ -1,5 +1,0 @@
-C:\Projects\team-awesome\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.dll
-C:\Projects\team-awesome\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.pdb
-C:\Projects\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\ResolveAssemblyReference.cache
-C:\Projects\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.dll
-C:\Projects\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.pdb

@@ -11,15 +11,16 @@ namespace OrderModel
         { 
         }
         
-        public static string EncoderOrder(Order order)
+        public static string EncodeOrder(Order order)
         {
+            throw new NotImplementedException();
             return string.Empty;
         }
         
-        public static Order DecoderOrder(string encodedOrder)
+        public static Order DecodeOrder(string encodedOrder)
         {
+            throw new NotImplementedException();
             return new Order();
         }
-
     }
 }

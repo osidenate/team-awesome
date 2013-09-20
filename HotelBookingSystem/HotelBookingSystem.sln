@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgencyModel", "TravelAgencyModel\TravelAgencyModel.csproj", "{6AFDF247-30BD-45E5-AF18-2A7CB929DA5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSupplierModel", "HotelSupplierModel\HotelSupplierModel.csproj", "{456AD35B-24D8-4BF2-865E-BDF017DE5098}"

@@ -5,56 +5,76 @@ using System.Text;
 
 namespace OrderModel
 {
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Order myOrder = new Order();
+            Order myDecodedOrder = null;
+            myOrder.SetID("100A10");
+
+            string encodedOrder = Order.EncodeOrder(myOrder);
+            myDecodedOrder = Order.DecodeOrder(encodedOrder);
+
+            Console.WriteLine(myDecodedOrder.GetID());
+
+        }
+    }
     public class Order
     {
+
+        private static EncryptDecryptServiceRef.ServiceClient encryptDecryptService = new EncryptDecryptServiceRef.ServiceClient();
         private string SenderId;
         private int CardNo; // CC number
         private int Amount; // Number of Rooms to order
 
+
+       
         public Order() 
-        { 
+        {
         }
 
         public void SetID(string senderId)
         {
-            SenderId = senderId;
+            this.SenderId = senderId;
         }
 
         public string GetID()
         {
-            return SenderId;
+            return this.SenderId;
         }
 
         public void SetCardNo(int cardNo)
         {
-            CardNo = cardNo;
+            this.CardNo = cardNo;
         }
 
         public int GetCardNo()
         {
-            return CardNo;
+            return this.CardNo;
         }
 
         public void SetAmt(int amount)
         {
-            Amount = amount;
+            this.Amount = amount;
         }
 
         public int GetAmt()
         {
-            return Amount;
+            return this.Amount;
         }
 
         public static string EncodeOrder(Order order)
         {
-            throw new NotImplementedException();
-            return string.Empty;
+            String encodedOrder = encryptDecryptService.Encrypt(order.GetID());
+            return encodedOrder;
         }
         
         public static Order DecodeOrder(string encodedOrder)
         {
-            throw new NotImplementedException();
-            return new Order();
+            Order myOrder = new Order();
+            myOrder.SetID(encryptDecryptService.Decrypt(encodedOrder));
+            return myOrder;
         }
     }
 }

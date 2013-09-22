@@ -12,11 +12,15 @@ namespace OrderModel
             Order myOrder = new Order();
             Order myDecodedOrder = null;
             myOrder.SetID("100A10");
+            myOrder.SetCardNo(2000);
+            myOrder.SetAmt(100);
 
             string encodedOrder = Order.EncodeOrder(myOrder);
             myDecodedOrder = Order.DecodeOrder(encodedOrder);
 
             Console.WriteLine(myDecodedOrder.GetID());
+            Console.WriteLine(myDecodedOrder.GetCardNo());
+            Console.WriteLine(myDecodedOrder.GetAmt());
 
         }
     }
@@ -32,6 +36,13 @@ namespace OrderModel
        
         public Order() 
         {
+        }
+
+        public Order(string senderId, int cardNo, int amount)
+        {
+            this.SenderId = senderId;
+            this.CardNo = cardNo;
+            this.Amount = amount;
         }
 
         public void SetID(string senderId)
@@ -66,14 +77,30 @@ namespace OrderModel
 
         public static string EncodeOrder(Order order)
         {
-            String encodedOrder = encryptDecryptService.Encrypt(order.GetID());
+            String encodedOrder = encryptDecryptService.Encrypt(Order.orderToString(order));
             return encodedOrder;
         }
         
         public static Order DecodeOrder(string encodedOrder)
         {
+            Order myOrder = Order.orderFromString(encryptDecryptService.Decrypt(encodedOrder));
+            return myOrder;
+        }
+
+        private static string orderToString(Order order)
+        {
+            string orderString = order.GetID() + "#" + order.GetCardNo() + "#" + order.GetAmt();
+
+            return orderString;
+        }
+
+        private static Order orderFromString(string orderString)
+        {
             Order myOrder = new Order();
-            myOrder.SetID(encryptDecryptService.Decrypt(encodedOrder));
+            string[] orderObj = orderString.Split('#');
+            myOrder.SetID(orderObj[0]);
+            myOrder.SetCardNo(int.Parse(orderObj[1]));
+            myOrder.SetAmt(int.Parse(orderObj[2]));
             return myOrder;
         }
     }

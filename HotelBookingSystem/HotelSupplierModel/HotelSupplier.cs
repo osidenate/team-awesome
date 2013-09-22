@@ -11,7 +11,9 @@ namespace HotelSupplierModel
     {
         // REQ: "There is a counter p in the HotelSupplier.
         //       After p (e.g., p = 10) price cuts have been made, the HotelSupplier thread will terminate."
-        private static int NumberOfPriceCuts = 0;
+        private int NumberOfPriceCuts = 0;
+        private readonly int MaxNumberOfPriceCuts = 10;
+
         private List<TravelAgency> TravelAgencies;
 
         public HotelSupplier()

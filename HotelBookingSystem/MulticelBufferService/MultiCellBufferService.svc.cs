@@ -15,33 +15,48 @@ namespace MulticelBufferService
         const int bufferSize = 3;
         private static Semaphore _sem = new Semaphore(0,3);
         private string[] multiCellBuffer = new string[bufferSize];
-
+        private bool[] isWritable = new bool[bufferSize];
+        
         public void setOneCell(string encodedOrder)
         {
+           // _sem.WaitOne();
             for (int i = 0; i < bufferSize; i++)
             {
-                Monitor.Enter(multiCellBuffer[i]);
-                try
+                while (!isWritable[i])
                 {
-                    if (multiCellBuffer[i].Length == 0)
-                        multiCellBuffer[i] = encodedOrder;
+                    try
+                    {
+                        Monitor.Wait(this);
+                    }
+                    catch { }
                 }
-                catch (Exception ex)
-                {
-                }
-                finally
-                {
-                    Monitor.Exit(multiCellBuffer[i]);
-                }
-
-                //_sem.Release(3);
+                multiCellBuffer[i] = encodedOrder;
+                isWritable[i] = false;
+                Monitor.PulseAll(this);
             }
-
+            //_sem.Release();
         }
 
         public string getOneCell()
         {
-            return "";
+            //_sem.WaitOne();
+            string returnValue = "";
+            for (int i = 0; i < bufferSize; i++)
+            {
+                while (isWritable[i])
+                {
+                    try
+                    {
+                        Monitor.Wait(this);
+                    }
+                    catch { }
+                }
+                returnValue = multiCellBuffer[i];
+                isWritable[i] = true;
+                Monitor.PulseAll(this);
+            }
+           // _sem.Release();
+            return returnValue;
         }
     }
 }

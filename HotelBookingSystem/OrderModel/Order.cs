@@ -12,7 +12,7 @@ namespace OrderModel
             Order myOrder = new Order();
             Order myDecodedOrder = null;
             myOrder.SetID("100A10");
-            myOrder.SetCardNo(2000);
+            myOrder.SetCardNo(2000000000);
             myOrder.SetAmt(100);
 
             string encodedOrder = Order.EncodeOrder(myOrder);
@@ -22,6 +22,16 @@ namespace OrderModel
             Console.WriteLine(myDecodedOrder.GetCardNo());
             Console.WriteLine(myDecodedOrder.GetAmt());
 
+            OrderProcessor op = new OrderProcessor();
+            try
+            {
+                //This function will throw and exception if the card number is not vaild
+                op.process(myDecodedOrder, 300.00,.80,1.00);
+            }
+            catch (ArgumentOutOfRangeException e) {
+
+                Console.WriteLine(e.Message);
+            }
         }
     }
     public class Order

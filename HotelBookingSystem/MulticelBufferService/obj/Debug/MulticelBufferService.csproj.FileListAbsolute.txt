@@ -1,0 +1,5 @@
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.csprojResolveAssemblyReference.cache
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.dll
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.pdb
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.dll
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.pdb

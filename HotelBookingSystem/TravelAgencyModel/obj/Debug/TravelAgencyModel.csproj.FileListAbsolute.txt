@@ -1,0 +1,5 @@
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\TravelAgencyModel\bin\Debug\TravelAgencyModel.dll
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\TravelAgencyModel\bin\Debug\TravelAgencyModel.pdb
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.csprojResolveAssemblyReference.cache
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.dll
+C:\Users\Victoria\Documents\GitHub\team-awesome\HotelBookingSystem\TravelAgencyModel\obj\Debug\TravelAgencyModel.pdb

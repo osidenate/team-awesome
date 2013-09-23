@@ -16,6 +16,20 @@ namespace HotelSupplierModel
 
         private List<TravelAgency> TravelAgencies;
 
+        private int _numberOfRoomsAvailable = 100;
+        public int NumberOfRoomsAvailable
+        {
+            get
+            {
+                return _numberOfRoomsAvailable;
+            }
+
+            set
+            {
+                _numberOfRoomsAvailable = value;
+            }
+        }
+
         public HotelSupplier()
         {
             TravelAgencies = new List<TravelAgency>();

@@ -9,8 +9,8 @@ namespace HotelSupplierModel
     {
         private const int BaseRoomPrice = 100;
 
-        public const double TaxRate = 0.07;
-        public const double LocationCharge = 10.0;
+        public readonly double TaxRate = 0.07;
+        public readonly double LocationCharge = 10.0;
 
         // The Unit Price will change depending on the day of the week
         // The Unit Price will increase as the NumberOfRoomsAvailable decreases

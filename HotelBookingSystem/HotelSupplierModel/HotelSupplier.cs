@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using OrderModel;
 using TravelAgencyModel;
 
@@ -63,8 +64,12 @@ namespace HotelSupplierModel
         public void SubmitOrder(string encodedOrder)
         {
             Order orderModel = Order.DecodeOrder(encodedOrder);
+            Pricing price = new Pricing(this);
 
-            // TODO
+            var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge);
+            var threadStart = new ThreadStart(orderProcessor.process);
+            var orderThread = new Thread(threadStart);
+            orderThread.Start();
         }
     }
 }

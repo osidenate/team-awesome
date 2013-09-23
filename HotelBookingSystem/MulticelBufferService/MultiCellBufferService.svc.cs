@@ -13,26 +13,24 @@ namespace MulticelBufferService
     public class MulticelBufferService : IMultiCellBufferService
     {
         const int bufferSize = 3;
-        private static Semaphore _sem = new Semaphore(0,3);
+        private static Semaphore _sem = new Semaphore(3,3);
         private string[] multiCellBuffer = new string[bufferSize];
-        private bool[] isWritable = new bool[bufferSize];
+        private bool[] isOccupied = {true,true,true};
         
         public void setOneCell(string encodedOrder)
         {
-           // _sem.WaitOne();
-            for (int i = 0; i < bufferSize; i++)
+            _sem.WaitOne();
+            lock (multiCellBuffer)
             {
-                while (!isWritable[i])
+                for (int i = 0; i < bufferSize; i++)
                 {
-                    try
+                    if (isOccupied[i])
                     {
-                        Monitor.Wait(this);
+                        multiCellBuffer[i] = encodedOrder;
+                        isOccupied[i] = false;
+                        break;
                     }
-                    catch { }
                 }
-                multiCellBuffer[i] = encodedOrder;
-                isWritable[i] = false;
-                Monitor.PulseAll(this);
             }
             //_sem.Release();
         }
@@ -41,21 +39,19 @@ namespace MulticelBufferService
         {
             //_sem.WaitOne();
             string returnValue = "";
-            for (int i = 0; i < bufferSize; i++)
+            lock (multiCellBuffer)
             {
-                while (isWritable[i])
+                for (int i = 0; i < bufferSize; i++)
                 {
-                    try
+                    if (!isOccupied[i])
                     {
-                        Monitor.Wait(this);
+                        returnValue = multiCellBuffer[i].ToString();
+                        isOccupied[i] = true;
+                        break;
                     }
-                    catch { }
                 }
-                returnValue = multiCellBuffer[i];
-                isWritable[i] = true;
-                Monitor.PulseAll(this);
             }
-           // _sem.Release();
+            _sem.Release();
             return returnValue;
         }
     }

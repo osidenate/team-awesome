@@ -15,7 +15,8 @@ namespace HotelSupplierModel
         private int NumberOfPriceCuts = 0;
         private readonly int MaxNumberOfPriceCuts = 10;
 
-        private List<TravelAgency> TravelAgencies;
+        public delegate void PriceCutEvent();
+        public event PriceCutEvent PriceCut;
 
         private int _numberOfRoomsAvailable = 100;
         public int NumberOfRoomsAvailable
@@ -33,7 +34,6 @@ namespace HotelSupplierModel
 
         public HotelSupplier()
         {
-            TravelAgencies = new List<TravelAgency>();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace HotelSupplierModel
         /// </summary>
         public void SubscribeToPriceCutEvent(TravelAgency travelAgency)
         {
-            TravelAgencies.Add(travelAgency);
+            PriceCut += travelAgency.NotifyPriceCut;
         }
 
         /// <summary>
@@ -50,10 +50,7 @@ namespace HotelSupplierModel
         /// </summary>
         public void EmitPriceCutEvent()
         {
-            foreach (var travelAgency in TravelAgencies)
-            {
-                travelAgency.NotifyPriceCut();
-            }
+            PriceCut.Invoke();
         }
 
         /// <summary>

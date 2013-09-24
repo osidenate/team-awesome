@@ -14,6 +14,7 @@ namespace HotelSupplierModel
         //       After p (e.g., p = 10) price cuts have been made, the HotelSupplier thread will terminate."
         private int NumberOfPriceCuts = 0;
         private readonly int MaxNumberOfPriceCuts = 10;
+        private double LastRoomPrice = 0;
 
         public delegate void PriceCutEvent();
         public event PriceCutEvent PriceCut;
@@ -67,6 +68,18 @@ namespace HotelSupplierModel
             var threadStart = new ThreadStart(orderProcessor.process);
             var orderThread = new Thread(threadStart);
             orderThread.Start();
+
+            if (price.UnitPrice < LastRoomPrice)
+            {
+                NumberOfPriceCuts++;
+
+                if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
+                    return;
+
+                EmitPriceCutEvent();
+            }
+
+            LastRoomPrice = price.UnitPrice;
         }
     }
 }

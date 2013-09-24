@@ -12,8 +12,6 @@ namespace HotelSupplierModel
         public readonly double TaxRate = 0.07;
         public readonly double LocationCharge = 10.0;
 
-        // The Unit Price will change depending on the day of the week
-        // The Unit Price will increase as the NumberOfRoomsAvailable decreases
         public double UnitPrice
         {
             get
@@ -23,6 +21,10 @@ namespace HotelSupplierModel
                 double multiplier = Math.Sqrt(rooms) * (1 / rooms);
 
                 double calculatedRate = todayRate + (todayRate * multiplier);
+
+                // Surprise price cut
+                if ((calculatedRate % 10) < 5)
+                    calculatedRate = calculatedRate - 20;
 
                 return Math.Round(calculatedRate, 2);
             }

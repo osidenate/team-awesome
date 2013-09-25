@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8d2b8abd-d655-4c4a-89c1-f89fff6343d5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:4533/MultiCellBufferService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MultiCellBufferService.xsd" MetadataType="Schema" ID="5035bc3d-c61f-4df5-9d62-95cb92f4f662" SourceId="1" SourceUrl="http://localhost:4533/MultiCellBufferService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MultiCellBufferService1.xsd" MetadataType="Schema" ID="c142f452-f820-4242-9383-f62c9c2fd81c" SourceId="1" SourceUrl="http://localhost:4533/MultiCellBufferService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MultiCellBufferService.disco" MetadataType="Disco" ID="e6ac7028-bd26-4924-b835-414ed2f72599" SourceId="1" SourceUrl="http://localhost:4533/MultiCellBufferService.svc?disco" />
+    <MetadataFile FileName="MulticelBufferService.wsdl" MetadataType="Wsdl" ID="450cfeb1-4e89-4b4b-b18c-74063ea5671f" SourceId="1" SourceUrl="http://localhost:4533/MultiCellBufferService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

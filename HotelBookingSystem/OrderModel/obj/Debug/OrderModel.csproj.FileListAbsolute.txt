@@ -4,3 +4,9 @@ C:\Users\User\Documents\GitHub\team-awesome\HotelBookingSystem\OrderModel\obj\De
 C:\Users\User\Documents\GitHub\team-awesome\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.exe.config
 C:\Users\User\Documents\GitHub\team-awesome\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.exe
 C:\Users\User\Documents\GitHub\team-awesome\HotelBookingSystem\OrderModel\obj\Debug\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.exe.config
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Debug\OrderModel.pdb
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Debug\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Debug\OrderModel.pdb

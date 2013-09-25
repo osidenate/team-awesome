@@ -1,0 +1,8 @@
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\bin\Release\TravelAgencyModel.dll.config
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\bin\Release\TravelAgencyModel.dll
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\bin\Release\TravelAgencyModel.pdb
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\bin\Release\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\bin\Release\OrderModel.pdb
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\obj\Release\ResolveAssemblyReference.cache
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\obj\Release\TravelAgencyModel.dll
+C:\Projects\trunk\HotelBookingSystem\TravelAgencyModel\obj\Release\TravelAgencyModel.pdb

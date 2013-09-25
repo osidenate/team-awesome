@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using OrderModel;
-using TravelAgencyModel;
 
 namespace HotelSupplierModel
 {
@@ -40,9 +39,9 @@ namespace HotelSupplierModel
         /// <summary>
         /// Subscribes the Travel Agency to the Price Cut Event 
         /// </summary>
-        public void SubscribeToPriceCutEvent(TravelAgency travelAgency)
+        public void SubscribeToPriceCutEvent()
         {
-            PriceCut += travelAgency.NotifyPriceCut;
+            //PriceCut += travelAgency.NotifyPriceCut;
         }
 
         /// <summary>
@@ -62,8 +61,8 @@ namespace HotelSupplierModel
         public void SubmitOrder(string encodedOrder)
         {
             Order orderModel = Order.DecodeOrder(encodedOrder);
-            Pricing price = new Pricing(this);
-
+            //Pricing price = new Pricing(this);
+            Pricing price = new Pricing(200);
             var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge);
             var threadStart = new ThreadStart(orderProcessor.process);
             var orderThread = new Thread(threadStart);

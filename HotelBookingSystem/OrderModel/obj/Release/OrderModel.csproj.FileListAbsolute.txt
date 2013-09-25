@@ -1,0 +1,6 @@
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Release\OrderModel.exe.config
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Release\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\OrderModel\bin\Release\OrderModel.pdb
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Release\ResolveAssemblyReference.cache
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Release\OrderModel.exe
+C:\Projects\trunk\HotelBookingSystem\OrderModel\obj\Release\OrderModel.pdb

@@ -13,11 +13,13 @@ namespace TravelAgencyLaunch
     {
         static void Main(string[] args)
         {
+            //references book page 101
+
             HotelSupplier myHotel = new HotelSupplier();
 
             Thread customer = new Thread(new ThreadStart(myHotel.PriceFunction));
-            customer.Start();  
-            TravelAgency travelAgency = new TravelAgency();
+            customer.Start();
+            TravelAgency travelAgency = new TravelAgency(myHotel);
             HotelSupplier.PriceCut += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
 
             Thread[] travelAgencies = new Thread[4];
@@ -27,16 +29,11 @@ namespace TravelAgencyLaunch
                 travelAgencies[i] = new Thread(new ThreadStart(travelAgency.PriceCutNotification));
                 travelAgencies[i].Name = (i + 1).ToString();
                 travelAgencies[i].Start();
-                //aborting now to avoid error until getting answer.
-                travelAgencies[i].Abort();
             }
-
-            //???The thread will terminate after the HotelSupplier thread has terminated. 
 
             for (int i = 0; i < 3; i++)
             {
-                //travelAgencies[i].Abort();
-                Console.WriteLine("Thread " + travelAgencies[i].Name + " needs to be stopped!");
+                travelAgencies[i].Join();
             }
             
             Console.ReadLine();

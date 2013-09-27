@@ -16,17 +16,17 @@ namespace TravelAgencyModel
         public double CurrentPrice { get; set; }
         public int roomsNeeded { get; set; }
         public Order myOrder { get; set; }
-
-        public TravelAgency()
+        public HotelSupplier myHotel = new HotelSupplier();
+        public TravelAgency(HotelSupplier hotel)
         {
+            myHotel = hotel;
+            CurrentPrice = myHotel.UnitPrice;
         }
 
         public void InitializeOrder(string senderId, int cardNo, int amount)
         {
             myOrder = new Order(senderId, cardNo, amount);
         }
-
-
 
         public void CalculateRoomsToOrder(int roomsNeed)
         {
@@ -47,8 +47,6 @@ namespace TravelAgencyModel
 
         public void PriceCutNotification()
         {
-            HotelSupplier myHotel = new HotelSupplier();
-
             if (PriceCut(myHotel.UnitPrice))
                 return;
             myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));

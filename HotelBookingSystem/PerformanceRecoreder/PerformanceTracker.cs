@@ -63,11 +63,19 @@ namespace PerformanceRecorder
             travalAgencies.Add(travelAgencyID, pd);
         }
 
+       /*Oder ID is the running total of the orders that are out. This is a way to identify which stopwwatch is getting started. 
+       Without this if a travel agengcy start the clock and before the order i processed the start another order,
+       they will over ride the previous stop watch time
+       Order number EX:
+        * First order processed orderID = 0;
+        * Second order processed orderID = 1;
+      
+         */
         public void startClock(int travelAgencyID) {
             PerformanceData pd;
             if (travalAgencies.TryGetValue(travelAgencyID, out pd))
             {
-                pd.getStopWatch().Start();
+              pd.getStopWatch().Start();
             }
             else {
                 throw new ArgumentException();
@@ -79,9 +87,7 @@ namespace PerformanceRecorder
             PerformanceData pd;
             if (travalAgencies.TryGetValue(travelAgencyID, out pd))
             {
-               Stopwatch sw = pd.getStopWatch();
-               sw.Stop();
-                pd.addTimeSpan(sw.Elapsed);
+               pd.addTimeSpan(pd.getStopWatch().Elapsed);
             }
             else
             {
@@ -96,6 +102,7 @@ namespace PerformanceRecorder
             foreach (KeyValuePair<int, PerformanceData> entry in travalAgencies)
             {
                 pd= entry.Value;
+                pd.getStopWatch().Stop();
                 Console.WriteLine("-----------------------------------------------------------------------------");
                 Console.WriteLine("{0,-20}\t {1,-21}\t {2,-21}", pd.getTravelAgencyID(), pd.getAverageResponseTime(), pd.getTotalTime());
             }

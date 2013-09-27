@@ -35,10 +35,8 @@ namespace PerformanceRecorder
         public double getAverageResponseTime(){
         
             int timesServed = elsapsedTime.Count;
-            TimeSpan totalTime = new TimeSpan();
-            foreach (TimeSpan ts in elsapsedTime){
-                   totalTime = totalTime.Add(ts);
-            }
+            TimeSpan totalTime = this.stopWatch.Elapsed;
+          
             double average = totalTime.TotalMilliseconds / timesServed;
 
             return average;
@@ -46,11 +44,7 @@ namespace PerformanceRecorder
 
         public double getTotalTime()
         {
-            TimeSpan totalTime = new TimeSpan();
-            foreach (TimeSpan ts in elsapsedTime)
-            {
-                totalTime = totalTime.Add(ts);
-            }
+            TimeSpan totalTime = this.stopWatch.Elapsed;
             double totalTimeMills = totalTime.TotalMilliseconds;
 
             return totalTimeMills;

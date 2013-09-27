@@ -7,6 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgencyModel", "Travel
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSupplierModel", "HotelSupplierModel\HotelSupplierModel.csproj", "{456AD35B-24D8-4BF2-865E-BDF017DE5098}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DDBF951C-4B50-4ED2-A7C5-C2228CB1D451} = {DDBF951C-4B50-4ED2-A7C5-C2228CB1D451}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderModel", "OrderModel\OrderModel.csproj", "{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}"
 EndProject

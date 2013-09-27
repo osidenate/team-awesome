@@ -54,6 +54,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HotelSupplierModel\HotelSupplierModel.csproj">
+      <Project>{456AD35B-24D8-4BF2-865E-BDF017DE5098}</Project>
+      <Name>HotelSupplierModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TravelAgencyModel\TravelAgencyModel.csproj">
       <Project>{6AFDF247-30BD-45E5-AF18-2A7CB929DA5B}</Project>
       <Name>TravelAgencyModel</Name>

@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service References\MulticellBufferService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="TravelAgency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,12 +54,41 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Service References\MulticellBufferService\MulticelBufferService.wsdl" />
+    <None Include="Service References\MulticellBufferService\MultiCellBufferService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MulticellBufferService\MultiCellBufferService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HotelSupplierModel\HotelSupplierModel.csproj">
+      <Project>{456AD35B-24D8-4BF2-865E-BDF017DE5098}</Project>
+      <Name>HotelSupplierModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OrderModel\OrderModel.csproj">
       <Project>{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}</Project>
       <Name>OrderModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MulticellBufferService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MulticellBufferService\MultiCellBufferService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MulticellBufferService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MulticellBufferService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MulticellBufferService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,6 +12,7 @@ namespace OrderModel
         public readonly double TaxRate = 0.07;
         public readonly double LocationCharge = 10.0;
         public double NumberOfRooms;
+
         public double UnitPrice
         {
             get

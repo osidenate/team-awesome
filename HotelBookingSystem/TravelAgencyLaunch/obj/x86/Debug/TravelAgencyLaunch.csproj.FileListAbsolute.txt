@@ -8,3 +8,15 @@ C:\Projects\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\OrderModel.pdb
 C:\Projects\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Projects\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\TravelAgencyLaunch.exe
 C:\Projects\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\TravelAgencyLaunch.pdb
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\TravelAgencyLaunch.exe.config
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\TravelAgencyLaunch.exe
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\TravelAgencyLaunch.pdb
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\TravelAgencyLaunch.exe
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\TravelAgencyLaunch.pdb
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\HotelSupplierModel.dll
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\TravelAgencyModel.dll
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\OrderModel.exe
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\HotelSupplierModel.pdb
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\TravelAgencyModel.pdb
+C:\team-awesome.git\trunk\HotelBookingSystem\TravelAgencyLaunch\bin\Debug\OrderModel.pdb

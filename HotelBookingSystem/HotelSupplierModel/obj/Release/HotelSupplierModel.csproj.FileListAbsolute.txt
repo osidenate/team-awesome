@@ -1,7 +1,0 @@
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\bin\Release\HotelSupplierModel.dll
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\bin\Release\HotelSupplierModel.pdb
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\bin\Release\OrderModel.exe
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\bin\Release\OrderModel.pdb
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\obj\Release\ResolveAssemblyReference.cache
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\obj\Release\HotelSupplierModel.dll
-C:\Projects\trunk\HotelBookingSystem\HotelSupplierModel\obj\Release\HotelSupplierModel.pdb

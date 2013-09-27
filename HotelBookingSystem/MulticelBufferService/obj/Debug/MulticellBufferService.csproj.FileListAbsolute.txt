@@ -1,5 +1,0 @@
-C:\team-awesome.git\trunk\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.dll
-C:\team-awesome.git\trunk\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.pdb
-C:\team-awesome.git\trunk\HotelBookingSystem\MulticelBufferService\obj\Debug\ResolveAssemblyReference.cache
-C:\team-awesome.git\trunk\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.dll
-C:\team-awesome.git\trunk\HotelBookingSystem\MulticelBufferService\obj\Debug\MulticelBufferService.pdb

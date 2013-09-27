@@ -1,5 +1,0 @@
-C:\Projects\trunk\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.dll
-C:\Projects\trunk\HotelBookingSystem\MulticelBufferService\bin\MulticelBufferService.pdb
-C:\Projects\trunk\HotelBookingSystem\MulticelBufferService\obj\Release\ResolveAssemblyReference.cache
-C:\Projects\trunk\HotelBookingSystem\MulticelBufferService\obj\Release\MulticelBufferService.dll
-C:\Projects\trunk\HotelBookingSystem\MulticelBufferService\obj\Release\MulticelBufferService.pdb

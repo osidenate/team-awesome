@@ -33,8 +33,7 @@ namespace TravelAgencyModel
 
         public void InitializePerformanceTracker()
         {
-            int threadId = new int();
-            threadId = Thread.CurrentThread.ManagedThreadId;
+            int threadId = Thread.CurrentThread.ManagedThreadId;
             TravelAgencyId = threadId.ToString();
             myPerformanceTracker.addTravelAgency(threadId);
         }
@@ -111,4 +110,5 @@ namespace TravelAgencyModel
             return Int32.Parse(cc);
         }
     }
+
 }

@@ -18,6 +18,7 @@ namespace TravelAgencyModel
         public Order myOrder { get; set; }
         public readonly HotelSupplier myHotel;
         private readonly string TravelAgencyId;
+        private readonly AutoResetEvent orderLock = new AutoResetEvent(true);
 
         public TravelAgency(HotelSupplier hotel)
         {
@@ -31,38 +32,63 @@ namespace TravelAgencyModel
             myOrder = new Order(TravelAgencyId, cardNo, amount);
         }
 
-        public void CalculateRoomsToOrder(int roomsNeed)
-        {
-
-        }
-
-        public bool PriceCut(double newPrice)
+        public bool IsPriceCut(double newPrice)
         {
             return (newPrice < CurrentPrice);
         }
 
-        //Each order is an OrderClass object. 
-        //The object is sent to the Encoder for encoding. 
-        //The encoded string is sent back to the travel agency. 
-        //Then, the travel agency will send the order in String format to the MultiCellBuffer. 
-        //Before sending the order to the MultiCellBuffer, a time stamp must be saved. 
-
-
         public void PriceCutNotification()
         {
-            if (PriceCut(myHotel.UnitPrice))
-                return;
-            myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
-            //???When the confirmation of order completion is received, the time of the order will be calculated and saved (or printed).
-            Console.WriteLine("Order is Complete");
+            SubmitOrder();
         }
 
         public void OrderProcessedNotification(string senderId, double totalCost)
         {
             if (senderId == TravelAgencyId)
             {
-                // TODO order completed timestamp
+                // TODO stop the stopwatch and log order completed timestamp
+
+                orderLock.Set();
             }
+        }
+
+        // Generates orders when there is not a price cut
+        public void OrderProducer()
+        {
+            while (myHotel.NumberOfRoomsAvailable > 0)
+            {
+                Thread.Sleep(1000);
+                SubmitOrder();
+            }
+        }
+
+        private void SubmitOrder()
+        {
+            // The travelagency should only be submitting one order at a time
+            orderLock.WaitOne();
+            orderLock.Reset();
+
+            // Order two rooms if there is a price cut, otherwise order one room
+            if (IsPriceCut(myHotel.UnitPrice))
+                InitializeOrder(GenerateRandomCreditCardNumber(), 2);
+            else
+                InitializeOrder(GenerateRandomCreditCardNumber(), 1);
+
+            // TODO Set timestamp/stopwatch
+
+            myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
+        }
+
+        private int GenerateRandomCreditCardNumber()
+        {
+            Random random = new Random();
+            string cc = "";
+            int i;
+            cc += random.Next(1, 9).ToString();
+            for (i = 0; i < 9; i++)
+                cc += random.Next(0, 9).ToString();
+            
+            return Int32.Parse(cc);
         }
     }
 }

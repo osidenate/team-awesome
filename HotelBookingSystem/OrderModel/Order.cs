@@ -34,15 +34,13 @@ namespace OrderModel
             }
         }
     }
+
     public class Order
     {
-
         private static EncryptDecryptServiceRef.ServiceClient encryptDecryptService = new EncryptDecryptServiceRef.ServiceClient();
         private string SenderId;
         private int CardNo; // CC number
         private int Amount; // Number of Rooms to order
-
-
        
         public Order() 
         {

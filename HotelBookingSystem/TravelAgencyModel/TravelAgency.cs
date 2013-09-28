@@ -30,6 +30,7 @@ namespace TravelAgencyModel
             CurrentPrice = myHotel.UnitPrice;
             myPerformanceTracker = performanceTest;
         }
+        }
 
         public void InitializePerformanceTracker()
         {

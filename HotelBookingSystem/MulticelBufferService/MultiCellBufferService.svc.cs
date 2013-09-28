@@ -14,8 +14,9 @@ namespace MulticelBufferService
     {
         const int bufferSize = 3;
         private static Semaphore _sem = new Semaphore(3,3);
-        private string[] multiCellBuffer = new string[bufferSize];
-        private bool[] isOccupied = {true,true,true};
+        private static Semaphore _sem2 = new Semaphore(0, 3);
+        private static string[] multiCellBuffer = new string[bufferSize];
+        private static bool[] isOccupied = {true,true,true};
         
         public void setOneCell(string encodedOrder)
         {
@@ -28,16 +29,16 @@ namespace MulticelBufferService
                     {
                         multiCellBuffer[i] = encodedOrder;
                         isOccupied[i] = false;
+                        _sem2.Release();
                         break;
                     }
                 }
             }
-            //_sem.Release();
         }
 
         public string getOneCell()
         {
-            //_sem.WaitOne();
+            _sem2.WaitOne();
             string returnValue = "";
             lock (multiCellBuffer)
             {
@@ -46,12 +47,13 @@ namespace MulticelBufferService
                     if (!isOccupied[i])
                     {
                         returnValue = multiCellBuffer[i].ToString();
-                        isOccupied[i] = true;
+                        isOccupied[i] = true;            
+                        _sem.Release();
                         break;
                     }
                 }
             }
-            _sem.Release();
+
             return returnValue;
         }
     }

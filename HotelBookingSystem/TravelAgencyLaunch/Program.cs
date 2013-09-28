@@ -37,22 +37,23 @@ namespace TravelAgencyLaunch
             Thread hotelSupplierThread = new Thread(new ThreadStart(myHotel.PriceFunction));
             hotelSupplierThread.Start();
 
-            TravelAgency travelAgency = new TravelAgency(myHotel);
-            myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
-            myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
+            List<Thread> travelAgencyThreads = new List<Thread>();
 
-            Thread[] travelAgencies = new Thread[4];
-
-            for (int i = 0; i < 3; i++)
+            // Create four travel agencies and subscribe them to the events
+            for (int i = 0; i < 4; i++)
             {
-                travelAgencies[i] = new Thread(new ThreadStart(travelAgency.PriceCutNotification));
-                travelAgencies[i].Name = (i + 1).ToString();
-                travelAgencies[i].Start();
+                var travelAgency = new TravelAgency(myHotel);
+                myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
+                myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
+
+                var agencyThread = new Thread(new ThreadStart(travelAgency.OrderProducer));
+                travelAgencyThreads.Add(agencyThread);
+                agencyThread.Start();
             }
 
-            for (int i = 0; i < 3; i++)
+            foreach (var agencyThread in travelAgencyThreads)
             {
-                travelAgencies[i].Join();
+                agencyThread.Join();
             }
             
             Console.ReadLine();

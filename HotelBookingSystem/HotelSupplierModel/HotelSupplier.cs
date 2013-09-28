@@ -44,10 +44,7 @@ namespace HotelSupplierModel
 
         public HotelSupplier()
         {
-            //If the new price is lower than the previous price, 
-            //it emits a (promotional) event and calls the event handlers in the travel agencies that have subscribed to the event.
-            if (BaseRoomPrice < UnitPrice)
-                EmitPriceCutEvent();
+
         }
 
         /// <summary>

@@ -84,7 +84,7 @@ namespace TravelAgencyModel
             Random random = new Random();
             string cc = "";
             int i;
-            cc += random.Next(1, 9).ToString();
+            cc += "1"; // should start with 1 so that we don't accidentally overflow Int32
             for (i = 0; i < 9; i++)
                 cc += random.Next(0, 9).ToString();
             

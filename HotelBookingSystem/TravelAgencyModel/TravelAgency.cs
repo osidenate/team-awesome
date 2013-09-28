@@ -19,6 +19,8 @@ namespace TravelAgencyModel
         public readonly HotelSupplier myHotel;
         private readonly string TravelAgencyId;
         private readonly AutoResetEvent orderLock = new AutoResetEvent(true);
+        private DateTime OrderStart { get; set; }
+        private DateTime OrderEnd { get; set; }
 
         public TravelAgency(HotelSupplier hotel)
         {
@@ -46,7 +48,8 @@ namespace TravelAgencyModel
         {
             if (senderId == TravelAgencyId)
             {
-                // TODO stop the stopwatch and log order completed timestamp
+                OrderEnd = DateTime.Now;
+                Console.WriteLine("Order " + senderId + " has completed");
 
                 orderLock.Set();
             }
@@ -68,13 +71,13 @@ namespace TravelAgencyModel
             orderLock.WaitOne();
             orderLock.Reset();
 
+            OrderStart = DateTime.Now;
+
             // Order two rooms if there is a price cut, otherwise order one room
             if (IsPriceCut(myHotel.UnitPrice))
                 InitializeOrder(GenerateRandomCreditCardNumber(), 2);
             else
                 InitializeOrder(GenerateRandomCreditCardNumber(), 1);
-
-            // TODO Set timestamp/stopwatch
 
             myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
         }

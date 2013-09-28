@@ -62,6 +62,10 @@
       <Project>{ee53c0a9-e1eb-4c72-b84e-f3d2ef4a39e1}</Project>
       <Name>OrderModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PerformanceRecoreder\PerformanceRecorder.csproj">
+      <Project>{e552dfa3-d1f3-4aa5-bbfd-8ce7d108dc3a}</Project>
+      <Name>PerformanceRecorder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TravelAgencyModel\TravelAgencyModel.csproj">
       <Project>{6AFDF247-30BD-45E5-AF18-2A7CB929DA5B}</Project>
       <Name>TravelAgencyModel</Name>

@@ -5,6 +5,7 @@ using System.Text;
 using HotelSupplierModel;
 using System.Threading;
 using OrderModel;
+using PerformanceRecorder;
 
 namespace TravelAgencyModel
 {
@@ -21,12 +22,17 @@ namespace TravelAgencyModel
         private readonly AutoResetEvent orderLock = new AutoResetEvent(true);
         private DateTime OrderStart { get; set; }
         private DateTime OrderEnd { get; set; }
+        private TestTracked PerformanceTest;
 
-        public TravelAgency(HotelSupplier hotel)
+        public TravelAgency(HotelSupplier hotel, TestTracked performanceTest)
         {
             myHotel = hotel;
             CurrentPrice = myHotel.UnitPrice;
-            TravelAgencyId = Thread.CurrentThread.ManagedThreadId.ToString();
+            PerformanceTest = performanceTest;
+
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+            TravelAgencyId = threadId.ToString();
+            PerformanceTest.gettracker().addTravelAgency(threadId);
         }
 
         public void InitializeOrder(int cardNo, int amount)
@@ -49,6 +55,7 @@ namespace TravelAgencyModel
             if (senderId == TravelAgencyId)
             {
                 OrderEnd = DateTime.Now;
+                PerformanceTest.gettracker().stopClock(Int32.Parse(TravelAgencyId));
                 Console.WriteLine("Order " + senderId + " has completed");
 
                 orderLock.Set();
@@ -72,6 +79,7 @@ namespace TravelAgencyModel
             orderLock.Reset();
 
             OrderStart = DateTime.Now;
+            PerformanceTest.gettracker().startClock(Int32.Parse(TravelAgencyId));
 
             // Order two rooms if there is a price cut, otherwise order one room
             if (IsPriceCut(myHotel.UnitPrice))

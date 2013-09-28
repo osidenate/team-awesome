@@ -5,9 +5,9 @@ using System.Text;
 using HotelSupplierModel;
 using TravelAgencyModel;
 using System.Threading;
+using PerformanceRecorder;
 
 namespace TravelAgencyLaunch
-
 {
     class Program
     {
@@ -39,10 +39,14 @@ namespace TravelAgencyLaunch
 
             List<Thread> travelAgencyThreads = new List<Thread>();
 
+            PerformanceTracker tracker = new PerformanceTracker();
+
             // Create four travel agencies and subscribe them to the events
             for (int i = 0; i < 4; i++)
             {
-                var travelAgency = new TravelAgency(myHotel);
+                TestTracked performanceTest = new TestTracked(tracker);
+
+                var travelAgency = new TravelAgency(myHotel, performanceTest);
                 myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
                 myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
 
@@ -55,7 +59,9 @@ namespace TravelAgencyLaunch
             {
                 agencyThread.Join();
             }
-            
+
+            tracker.printPerfromancnceData();
+
             Console.ReadLine();
         }
     }

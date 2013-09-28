@@ -71,6 +71,10 @@
       <Project>{EE53C0A9-E1EB-4C72-B84E-F3D2EF4A39E1}</Project>
       <Name>OrderModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PerformanceRecoreder\PerformanceRecorder.csproj">
+      <Project>{e552dfa3-d1f3-4aa5-bbfd-8ce7d108dc3a}</Project>
+      <Name>PerformanceRecorder</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MulticellBufferService\" />

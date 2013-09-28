@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace PerformanceRecorder
 {
-    class TestTracked
+    public class TestTracked
     {
         private PerformanceTracker tracker; 
         public TestTracked(PerformanceTracker tracker){
@@ -19,7 +19,7 @@ namespace PerformanceRecorder
             return this.tracker;
         }
     }
-    class PerformanceTracker
+    public class PerformanceTracker
     {
 
         private Dictionary<int,PerformanceData> travalAgencies;

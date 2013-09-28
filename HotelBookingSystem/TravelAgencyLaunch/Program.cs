@@ -44,7 +44,9 @@ namespace TravelAgencyLaunch
             // Create four travel agencies and subscribe them to the events
             for (int i = 0; i < 4; i++)
             {
-                var travelAgency = new TravelAgency(myHotel, tracker);
+                TestTracked performanceTest = new TestTracked(tracker);
+
+                var travelAgency = new TravelAgency(myHotel, performanceTest);
                 myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
                 myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
 

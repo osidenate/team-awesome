@@ -22,7 +22,7 @@ namespace PerformanceRecorder
     public class PerformanceTracker
     {
 
-        private Dictionary<int,PerformanceData> travalAgencies = new Dictionary<int,PerformanceData>();
+        private Dictionary<int,PerformanceData> travalAgencies;
 
         static void Main(string[] args)
         {
@@ -55,16 +55,12 @@ namespace PerformanceRecorder
         }
 
         public PerformanceTracker() {
-            //travalAgencies = new Dictionary<int,PerformanceData>();
+            travalAgencies = new Dictionary<int,PerformanceData>();
         }
 
         public void addTravelAgency(int travelAgencyID){
             PerformanceData pd = new PerformanceData(travelAgencyID);
-            lock (travalAgencies)
-            {
-                travalAgencies.Add(travelAgencyID, pd);
-            }
-            
+            travalAgencies.Add(travelAgencyID, pd);
         }
 
        /*Oder ID is the running total of the orders that are out. This is a way to identify which stopwwatch is getting started. 

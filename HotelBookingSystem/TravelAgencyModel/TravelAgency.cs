@@ -22,20 +22,16 @@ namespace TravelAgencyModel
         private readonly AutoResetEvent orderLock = new AutoResetEvent(true);
         private DateTime OrderStart { get; set; }
         private DateTime OrderEnd { get; set; }
-        private PerformanceTracker myPerformanceTracker;
 
-        public TravelAgency(HotelSupplier hotel, PerformanceTracker performanceTest)
         {
             myHotel = hotel;
             CurrentPrice = myHotel.UnitPrice;
-            myPerformanceTracker = performanceTest;
         }
 
         public void InitializePerformanceTracker()
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
             TravelAgencyId = threadId.ToString();
-            myPerformanceTracker.addTravelAgency(threadId);
         }
 
         public void InitializeOrder(int cardNo, int amount)
@@ -58,7 +54,6 @@ namespace TravelAgencyModel
             if (senderId == TravelAgencyId)
             {
                 OrderEnd = DateTime.Now;
-                myPerformanceTracker.stopClock(Int32.Parse(TravelAgencyId));
                 Console.WriteLine("Order " + senderId + " has completed");
 
                 orderLock.Set();
@@ -78,16 +73,13 @@ namespace TravelAgencyModel
         private void SubmitOrder()
         {
             if (TravelAgencyId == null)
-            {
                 InitializePerformanceTracker();
-            }
 
             // The travelagency should only be submitting one order at a time
             orderLock.WaitOne();
             orderLock.Reset();
 
             OrderStart = DateTime.Now;
-            myPerformanceTracker.startClock(Int32.Parse(TravelAgencyId));
 
             // Order two rooms if there is a price cut, otherwise order one room
             if (IsPriceCut(myHotel.UnitPrice))
@@ -111,4 +103,3 @@ namespace TravelAgencyModel
         }
     }
 
-}

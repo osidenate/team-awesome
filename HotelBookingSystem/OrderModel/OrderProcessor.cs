@@ -12,15 +12,17 @@ namespace OrderModel
         private readonly double price;
         private readonly double taxRate;
         private readonly double locationCharge;
+        private ICompletedOrderListener hotelSupplier;
 
         static Regex _regex = new Regex(@"^\d{10}$");//card number must be 10 digts long
 
-        public OrderProcessor(Order order, double price, double taxRate, double locationCharge)
+        public OrderProcessor(Order order, double price, double taxRate, double locationCharge, ICompletedOrderListener hotelSupplier)
         {
             this.order = order;
             this.price = price;
             this.taxRate = taxRate;
             this.locationCharge = locationCharge;
+            this.hotelSupplier = hotelSupplier;
         }
 
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the Card number sent in does not match the expected card number format</exception>
@@ -33,6 +35,8 @@ namespace OrderModel
                 Double totalCost;
 
                 totalCost = (price * order.GetAmt()) * (1+taxRate) + locationCharge;
+
+                hotelSupplier.OrderComplete(order.GetID(), totalCost);
 
                 Console.WriteLine("The cost of you order is ${0}", totalCost);
             }

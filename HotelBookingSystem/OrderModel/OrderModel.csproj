@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICompletedOrderListener.cs" />
     <Compile Include="OrderProcessor.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Pricing.cs" />

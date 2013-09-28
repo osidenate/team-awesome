@@ -34,11 +34,12 @@ namespace TravelAgencyLaunch
 //(4) A screenshot of your execution of the program with input and output;
 
             HotelSupplier myHotel = new HotelSupplier();
+            Thread hotelSupplierThread = new Thread(new ThreadStart(myHotel.PriceFunction));
+            hotelSupplierThread.Start();
 
-            Thread customer = new Thread(new ThreadStart(myHotel.PriceFunction));
-            customer.Start();
             TravelAgency travelAgency = new TravelAgency(myHotel);
-            HotelSupplier.PriceCut += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
+            myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
+            myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
 
             Thread[] travelAgencies = new Thread[4];
 
@@ -55,8 +56,6 @@ namespace TravelAgencyLaunch
             }
             
             Console.ReadLine();
-
-
         }
     }
 }

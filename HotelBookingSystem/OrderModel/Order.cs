@@ -22,11 +22,11 @@ namespace OrderModel
             Console.WriteLine(myDecodedOrder.GetCardNo());
             Console.WriteLine(myDecodedOrder.GetAmt());
 
-            OrderProcessor op = new OrderProcessor(myDecodedOrder, 300.00, .80, 1.00);
+            // OrderProcessor op = new OrderProcessor(myDecodedOrder, 300.00, .80, 1.00);
             try
             {
                 //This function will throw and exception if the card number is not vaild
-                op.process();
+                //op.process();
             }
             catch (ArgumentOutOfRangeException e) {
 

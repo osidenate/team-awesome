@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using OrderModel;
+using HotelSupplierModel.MulticellBufferService;
 
 namespace HotelSupplierModel
 {
-    public class HotelSupplier
+    public class HotelSupplier : ICompletedOrderListener
     {
         // REQ: "There is a counter p in the HotelSupplier.
         //       After p (e.g., p = 10) price cuts have been made, the HotelSupplier thread will terminate."
@@ -16,8 +17,10 @@ namespace HotelSupplierModel
         private double LastRoomPrice = 0;
 
         public delegate void PriceCutEvent();
+        public delegate void OrderProcessedEvent(string senderId, double totalCost);
 
-        public static event PriceCutEvent PriceCut;
+        public event PriceCutEvent PriceCut;
+        public event OrderProcessedEvent OrderProcessed;
 
         private int _numberOfRoomsAvailable = 100;
 
@@ -47,24 +50,12 @@ namespace HotelSupplierModel
                 EmitPriceCutEvent();
         }
 
-
-        /// <summary>
-        /// Subscribes the Travel Agency to the Price Cut Event 
-        /// </summary>
-        public void SubscribeToPriceCutEvent()
-        {
-            //PriceCut += travelAgency.NotifyPriceCut;
-        }
-
         /// <summary>
         /// REQ: "It defines a price-cut event that can emit an event and call the event handlers in the TravelAgencys
         ///       if there is a price-cut according to the PricingModel"
         /// </summary>
         public void EmitPriceCutEvent()
         {
-            //KN: PriceCut.Invoke();
-            //KN: corrected syntax for raising the event
-
             if (PriceCut != null)
                 PriceCut();
         }
@@ -77,21 +68,19 @@ namespace HotelSupplierModel
         public void SubmitOrder(string encodedOrder)
         {
             Order orderModel = Order.DecodeOrder(encodedOrder);
-            //Pricing price = new Pricing(this);
-            Pricing price = new Pricing(200);
-            var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge);
+            Pricing price = new Pricing(NumberOfRoomsAvailable);
+            var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge, this);
             var threadStart = new ThreadStart(orderProcessor.process);
             var orderThread = new Thread(threadStart);
             orderThread.Start();
 
             if (price.UnitPrice < LastRoomPrice)
             {
-                NumberOfPriceCuts++;
-
                 if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
-                    return;
+                    return; // TODO needs to exit thread
 
                 EmitPriceCutEvent();
+                NumberOfPriceCuts++;
             }
 
             LastRoomPrice = price.UnitPrice;
@@ -158,7 +147,24 @@ namespace HotelSupplierModel
             //KN: MulticellBufferService.MultiCellBufferServiceClient myMultiCellBufferService = new MulticellBufferService.MultiCellBufferServiceClient();
             //KN: myMultiCellBufferService.getOneCell(Order.DecodeOrder(myOrder));
 
+            using (var bufferService = new MultiCellBufferServiceClient())
+            {
+                while (NumberOfRoomsAvailable > 0)
+                {
+                    Thread.Sleep(1000);
+
+                    string encodedOrder = bufferService.getOneCell();
+                    SubmitOrder(encodedOrder);
+                    
+                    NumberOfRoomsAvailable--;
+                }
+            }
         }
 
+        public void OrderComplete(string senderId, double totalPrice)
+        {
+            if (OrderProcessed != null)
+                OrderProcessed(senderId, totalPrice);
+        }
     }
 }

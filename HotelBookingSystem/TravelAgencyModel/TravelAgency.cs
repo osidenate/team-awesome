@@ -16,16 +16,19 @@ namespace TravelAgencyModel
         public double CurrentPrice { get; set; }
         public int roomsNeeded { get; set; }
         public Order myOrder { get; set; }
-        public HotelSupplier myHotel = new HotelSupplier();
+        public readonly HotelSupplier myHotel;
+        private readonly string TravelAgencyId;
+
         public TravelAgency(HotelSupplier hotel)
         {
             myHotel = hotel;
             CurrentPrice = myHotel.UnitPrice;
+            TravelAgencyId = Thread.CurrentThread.ManagedThreadId.ToString();
         }
 
-        public void InitializeOrder(string senderId, int cardNo, int amount)
+        public void InitializeOrder(int cardNo, int amount)
         {
-            myOrder = new Order(senderId, cardNo, amount);
+            myOrder = new Order(TravelAgencyId, cardNo, amount);
         }
 
         public void CalculateRoomsToOrder(int roomsNeed)
@@ -52,6 +55,14 @@ namespace TravelAgencyModel
             myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
             //???When the confirmation of order completion is received, the time of the order will be calculated and saved (or printed).
             Console.WriteLine("Order is Complete");
+        }
+
+        public void OrderProcessedNotification(string senderId, double totalCost)
+        {
+            if (senderId == TravelAgencyId)
+            {
+                // TODO order completed timestamp
+            }
         }
     }
 }

@@ -18,21 +18,25 @@ namespace TravelAgencyModel
         public int roomsNeeded { get; set; }
         public Order myOrder { get; set; }
         public readonly HotelSupplier myHotel;
-        private readonly string TravelAgencyId;
+        private string TravelAgencyId = null;
         private readonly AutoResetEvent orderLock = new AutoResetEvent(true);
         private DateTime OrderStart { get; set; }
         private DateTime OrderEnd { get; set; }
-        private TestTracked PerformanceTest;
+        private PerformanceTracker myPerformanceTracker;
 
-        public TravelAgency(HotelSupplier hotel, TestTracked performanceTest)
+        public TravelAgency(HotelSupplier hotel, PerformanceTracker performanceTest)
         {
             myHotel = hotel;
             CurrentPrice = myHotel.UnitPrice;
-            PerformanceTest = performanceTest;
+            myPerformanceTracker = performanceTest;
+        }
 
-            int threadId = Thread.CurrentThread.ManagedThreadId;
+        public void InitializePerformanceTracker()
+        {
+            int threadId = new int();
+            threadId = Thread.CurrentThread.ManagedThreadId;
             TravelAgencyId = threadId.ToString();
-            PerformanceTest.gettracker().addTravelAgency(threadId);
+            myPerformanceTracker.addTravelAgency(threadId);
         }
 
         public void InitializeOrder(int cardNo, int amount)
@@ -55,7 +59,7 @@ namespace TravelAgencyModel
             if (senderId == TravelAgencyId)
             {
                 OrderEnd = DateTime.Now;
-                PerformanceTest.gettracker().stopClock(Int32.Parse(TravelAgencyId));
+                myPerformanceTracker.stopClock(Int32.Parse(TravelAgencyId));
                 Console.WriteLine("Order " + senderId + " has completed");
 
                 orderLock.Set();
@@ -74,12 +78,17 @@ namespace TravelAgencyModel
 
         private void SubmitOrder()
         {
+            if (TravelAgencyId == null)
+            {
+                InitializePerformanceTracker();
+            }
+
             // The travelagency should only be submitting one order at a time
             orderLock.WaitOne();
             orderLock.Reset();
 
             OrderStart = DateTime.Now;
-            PerformanceTest.gettracker().startClock(Int32.Parse(TravelAgencyId));
+            myPerformanceTracker.startClock(Int32.Parse(TravelAgencyId));
 
             // Order two rooms if there is a price cut, otherwise order one room
             if (IsPriceCut(myHotel.UnitPrice))

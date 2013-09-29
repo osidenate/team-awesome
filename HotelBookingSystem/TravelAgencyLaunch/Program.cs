@@ -45,8 +45,9 @@ namespace TravelAgencyLaunch
             for (int i = 0; i < 4; i++)
             {
                 var travelAgency = new TravelAgency(myHotel, tracker);
-                myHotel.PriceCut       += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
-                myHotel.OrderProcessed += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
+                myHotel.PriceCut        += new HotelSupplier.PriceCutEvent(travelAgency.PriceCutNotification);
+                myHotel.OrderProcessed  += new HotelSupplier.OrderProcessedEvent(travelAgency.OrderProcessedNotification);
+                myHotel.SupplierStopped += new HotelSupplier.SupplierStoppedEvent(travelAgency.StopTravelAgency);
 
                 var agencyThread = new Thread(new ThreadStart(travelAgency.OrderProducer));
                 travelAgencyThreads.Add(agencyThread);

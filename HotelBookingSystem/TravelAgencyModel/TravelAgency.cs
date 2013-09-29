@@ -23,6 +23,7 @@ namespace TravelAgencyModel
         private DateTime OrderStart { get; set; }
         private DateTime OrderEnd { get; set; }
         private PerformanceTracker myPerformanceTracker;
+        private bool StopTravelAgencyThread = false;
 
         public TravelAgency(HotelSupplier hotel, PerformanceTracker performanceTest)
         {
@@ -70,7 +71,6 @@ namespace TravelAgencyModel
         {
             while (myHotel.NumberOfRoomsAvailable > 0)
             {
-                Thread.Sleep(100);
                 SubmitOrder();
             }
         }
@@ -84,7 +84,10 @@ namespace TravelAgencyModel
 
             // The travelagency should only be submitting one order at a time
             orderLock.WaitOne();
-            orderLock.Reset();
+            // orderLock.Reset(); // Should not need this since we are using the AutoResetEvent
+
+            if (StopTravelAgencyThread)
+                return;
 
             OrderStart = DateTime.Now;
             myPerformanceTracker.startClock(Int32.Parse(TravelAgencyId));
@@ -114,6 +117,10 @@ namespace TravelAgencyModel
             
             return Int32.Parse(cc);
         }
-    }
 
+        public void StopTravelAgency()
+        {
+            StopTravelAgencyThread = true;
+        }
+    }
 }

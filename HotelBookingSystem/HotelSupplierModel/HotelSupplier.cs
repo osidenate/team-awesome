@@ -18,9 +18,11 @@ namespace HotelSupplierModel
 
         public delegate void PriceCutEvent();
         public delegate void OrderProcessedEvent(string senderId, double totalCost);
+        public delegate void SupplierStoppedEvent();
 
         public event PriceCutEvent PriceCut;
         public event OrderProcessedEvent OrderProcessed;
+        public event SupplierStoppedEvent SupplierStopped;
 
         private int _numberOfRoomsAvailable = 100;
 
@@ -78,7 +80,8 @@ namespace HotelSupplierModel
                     if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
                     {
                         // REQ: The thread should stop when there are no more price cuts available
-                        Thread.CurrentThread.Abort();
+                        Console.WriteLine("Supplier is stopping because the max number of price cuts has been reached");
+                        StopHotelSupplier();
                     }
 
                     EmitPriceCutEvent();
@@ -138,29 +141,22 @@ namespace HotelSupplierModel
             return BaseRoomPrice;
         }
 
-        //KN: added this event
         public void PriceFunction()
         {
-            //KN: REQ: It receives the orders (in a string) from the MultiCellBuffer. 
-            //KN:It calls the Decoder to convert the string into the order object. 
-            //KN:For each order, you can use the existing thread or start a new thread (resulting in multiple threads for processing multiple orders [1]) from OrderProcessing class (or method) to process the order based on the current price. 
-            //KN:There is a counter p in the HotelSupplier. After p (e.g., p = 10) price cuts have been made, the HotelSupplier thread will terminate. Before generating the first price, a time stamp must be saved [2]. Before the thread terminates, the total time used will be calculated and saved (or printed). 
-            //KN: Would add code
-
-            //KN: MulticellBufferService.MultiCellBufferServiceClient myMultiCellBufferService = new MulticellBufferService.MultiCellBufferServiceClient();
-            //KN: myMultiCellBufferService.getOneCell(Order.DecodeOrder(myOrder));
-
             using (var bufferService = new MultiCellBufferServiceClient())
             {
                 while (NumberOfRoomsAvailable > 0)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
 
                     string encodedOrder = bufferService.getOneCell();
                     SubmitOrder(encodedOrder);
                     
                     NumberOfRoomsAvailable--;
                 }
+
+                Console.WriteLine("Supplier is stopping because there are no more rooms available.");
+                StopHotelSupplier();
             }
         }
 
@@ -168,6 +164,19 @@ namespace HotelSupplierModel
         {
             if (OrderProcessed != null)
                 OrderProcessed(senderId, totalPrice);
+        }
+
+        /// <summary>
+        /// Call from the HotelSupplier thread. It will launch an event to stop the Travel Agency threads
+        /// </summary>
+        private void StopHotelSupplier()
+        {
+            NumberOfRoomsAvailable = 0;
+
+            if (SupplierStopped != null)
+                SupplierStopped();
+
+            Thread.CurrentThread.Abort();
         }
     }
 }

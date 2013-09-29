@@ -38,7 +38,7 @@ namespace OrderModel
 
                 hotelSupplier.OrderComplete(order.GetID(), totalCost);
 
-                Console.WriteLine("The cost of you order is ${0}", totalCost);
+               // Console.WriteLine("The cost of you order is ${0}\r\n", totalCost);
             }
             else
             {

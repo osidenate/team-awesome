@@ -14,7 +14,7 @@ namespace TravelAgencyModel
         //REQ: The travel agency will calculate the number of rooms to order, 
         //     for example, based on the need and the difference between the previous price and the current price.
         MulticellBufferService.MultiCellBufferServiceClient myMultiCellBufferService = new MulticellBufferService.MultiCellBufferServiceClient();
-        public double CurrentPrice { get; set; }
+       
         public int roomsNeeded { get; set; }
         public Order myOrder { get; set; }
         public readonly HotelSupplier myHotel;
@@ -23,11 +23,41 @@ namespace TravelAgencyModel
         private DateTime OrderStart { get; set; }
         private DateTime OrderEnd { get; set; }
         private PerformanceTracker myPerformanceTracker;
+        private Boolean isPriceCut = false;
+        public static double CurrentPrice;
+        object box = CurrentPrice;
 
+        public static double OldPrice;
+        object box2 = OldPrice;
+
+        public double myCurrentPrice
+        {
+            get
+            {
+                return (double)box;
+            }
+
+            set
+            {
+                box = value;
+            }
+        }
+        public double myOldPrice
+        {
+            get
+            {
+                return (double)box2;
+            }
+
+            set
+            {
+                box2 = value;
+            }
+        }
         public TravelAgency(HotelSupplier hotel, PerformanceTracker performanceTest)
         {
             myHotel = hotel;
-            CurrentPrice = myHotel.UnitPrice;
+            myCurrentPrice = myHotel.CurrentRoomPrice.UnitPrice;
             myPerformanceTracker = performanceTest;
         }
 
@@ -43,14 +73,22 @@ namespace TravelAgencyModel
             myOrder = new Order(TravelAgencyId, cardNo, amount);
         }
 
-        public bool IsPriceCut(double newPrice)
+        public bool IsPriceCut()
         {
-            return (newPrice < CurrentPrice);
+           
+            if (myOldPrice <= myCurrentPrice) {
+                isPriceCut = false;
+            }
+            return (isPriceCut);
         }
 
         public void PriceCutNotification()
         {
-            SubmitOrder();
+            lock (box) {
+                box = myHotel.CurrentRoomPrice.UnitPrice;
+            }
+            isPriceCut = true;
+           
         }
 
         public void OrderProcessedNotification(string senderId, double totalCost)
@@ -61,41 +99,51 @@ namespace TravelAgencyModel
                 myPerformanceTracker.stopClock(Int32.Parse(TravelAgencyId));
                 Console.WriteLine("Order " + senderId + " has completed");
 
-                orderLock.Set();
+               
             }
         }
 
         // Generates orders when there is not a price cut
         public void OrderProducer()
         {
-            while (myHotel.NumberOfRoomsAvailable > 0)
+            InitializePerformanceTracker();
+            while ((int)myHotel.box < myHotel.MaxNumberOfPriceCuts +1)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
                 SubmitOrder();
             }
+           Console.WriteLine("thread {0} exited", TravelAgencyId);
+            Thread.CurrentThread.Abort();
+            
+            
         }
 
         private void SubmitOrder()
         {
-            if (TravelAgencyId == null)
-            {
-                InitializePerformanceTracker();
-            }
-
+         
             // The travelagency should only be submitting one order at a time
-            orderLock.WaitOne();
-            orderLock.Reset();
+          orderLock.WaitOne();
+           orderLock.Reset();
 
             OrderStart = DateTime.Now;
             myPerformanceTracker.startClock(Int32.Parse(TravelAgencyId));
 
             // Order two rooms if there is a price cut, otherwise order one room
-            if (IsPriceCut(myHotel.UnitPrice))
+            if (IsPriceCut())
+            {
+                Console.WriteLine("NOTICE: Additional rooms are being ordered due to a price cut event");
                 InitializeOrder(GenerateRandomCreditCardNumber(), 2);
+            }
             else
+            {
                 InitializeOrder(GenerateRandomCreditCardNumber(), 1);
+            }
 
             myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
+            lock (box2) {
+                myOldPrice = myHotel.LastRoomPrice.UnitPrice;
+            }
+            orderLock.Set();
         }
 
         private int GenerateRandomCreditCardNumber()

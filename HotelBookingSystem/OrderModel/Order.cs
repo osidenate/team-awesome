@@ -5,36 +5,7 @@ using System.Text;
 
 namespace OrderModel
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Order myOrder = new Order();
-            Order myDecodedOrder = null;
-            myOrder.SetID("100A10");
-            myOrder.SetCardNo(2000000000);
-            myOrder.SetAmt(100);
-
-            string encodedOrder = Order.EncodeOrder(myOrder);
-            myDecodedOrder = Order.DecodeOrder(encodedOrder);
-
-            Console.WriteLine(myDecodedOrder.GetID());
-            Console.WriteLine(myDecodedOrder.GetCardNo());
-            Console.WriteLine(myDecodedOrder.GetAmt());
-
-            // OrderProcessor op = new OrderProcessor(myDecodedOrder, 300.00, .80, 1.00);
-            try
-            {
-                //This function will throw and exception if the card number is not vaild
-                //op.process();
-            }
-            catch (ArgumentOutOfRangeException e) {
-
-                Console.WriteLine(e.Message);
-            }
-        }
-    }
-
+    
     public class Order
     {
         private static EncryptDecryptServiceRef.ServiceClient encryptDecryptService = new EncryptDecryptServiceRef.ServiceClient();

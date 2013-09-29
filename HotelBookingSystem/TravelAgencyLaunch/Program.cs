@@ -36,6 +36,7 @@ namespace TravelAgencyLaunch
             HotelSupplier myHotel = new HotelSupplier();
             Thread hotelSupplierThread = new Thread(new ThreadStart(myHotel.PriceFunction));
             hotelSupplierThread.Start();
+            
 
             List<Thread> travelAgencyThreads = new List<Thread>();
 
@@ -53,14 +54,20 @@ namespace TravelAgencyLaunch
                 agencyThread.Start();
             }
 
-            foreach (var agencyThread in travelAgencyThreads)
+            try
             {
-                agencyThread.Join();
+                foreach (var agencyThread in travelAgencyThreads)
+                {
+                    agencyThread.Join();
+                }
+            }
+            finally
+            {
+                hotelSupplierThread.Abort();
+                tracker.printPerfromancnceData();
             }
 
-            tracker.printPerfromancnceData();
-
-            Console.ReadLine();
+            
         }
     }
 }

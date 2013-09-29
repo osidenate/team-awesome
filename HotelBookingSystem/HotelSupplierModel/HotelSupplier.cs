@@ -12,9 +12,9 @@ namespace HotelSupplierModel
     {
         // REQ: "There is a counter p in the HotelSupplier.
         //       After p (e.g., p = 10) price cuts have been made, the HotelSupplier thread will terminate."
-        private int NumberOfPriceCuts = 0;
-        private readonly int MaxNumberOfPriceCuts = 10;
-        private double LastRoomPrice = 0;
+        public static int NumberOfPriceCuts = 0;
+        public readonly int MaxNumberOfPriceCuts = 10;
+       
 
         public delegate void PriceCutEvent();
         public delegate void OrderProcessedEvent(string senderId, double totalCost);
@@ -22,26 +22,31 @@ namespace HotelSupplierModel
         public event PriceCutEvent PriceCut;
         public event OrderProcessedEvent OrderProcessed;
 
-        private int _numberOfRoomsAvailable = 100;
+        private static int _numberOfRoomsAvailable = 100;
 
-        private const int BaseRoomPrice = 100;
+        private const int BaseRoomPrice = 50;
 
         public readonly double TaxRate = 0.07;
         public readonly double LocationCharge = 10.0;
+        public Pricing LastRoomPrice = new Pricing(_numberOfRoomsAvailable);
+        public Pricing CurrentRoomPrice = new Pricing(_numberOfRoomsAvailable);
+       
+
+        public  object box = NumberOfPriceCuts;
+        private object box2 = _numberOfRoomsAvailable;
 
         public int NumberOfRoomsAvailable
         {
             get
             {
-                return _numberOfRoomsAvailable;
+                return (int)box2;
             }
 
             set
             {
-                _numberOfRoomsAvailable = value;
+                box2 = value;
             }
         }
-
         public HotelSupplier()
         {
 
@@ -53,8 +58,10 @@ namespace HotelSupplierModel
         /// </summary>
         public void EmitPriceCutEvent()
         {
+            
             if (PriceCut != null)
-                PriceCut();
+               PriceCut();
+           
         }
 
         /// <summary>
@@ -65,73 +72,27 @@ namespace HotelSupplierModel
         public void SubmitOrder(string encodedOrder)
         {
             Order orderModel = Order.DecodeOrder(encodedOrder);
-            Pricing price = new Pricing(NumberOfRoomsAvailable);
+            Pricing price = CurrentRoomPrice;
             var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge, this);
             var threadStart = new ThreadStart(orderProcessor.process);
             var orderThread = new Thread(threadStart);
             orderThread.Start();
 
-            if (price.UnitPrice < LastRoomPrice)
+            lock (price)
             {
-                if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
-                    return; // TODO needs to exit thread
-
-                EmitPriceCutEvent();
-                NumberOfPriceCuts++;
-            }
-
-            LastRoomPrice = price.UnitPrice;
-        }
-
-        public double UnitPrice
-        {
-            get
-            {
-                double todayRate = GetTodaysRoomPrice();
-
-                double multiplier = Math.Sqrt(NumberOfRoomsAvailable) * (1 / NumberOfRoomsAvailable);
-
-                double calculatedRate = todayRate + (todayRate * multiplier);
-
-                // Surprise price cut
-                if ((calculatedRate % 10) < 5)
-                    calculatedRate = calculatedRate - 20;
-
-                return Math.Round(calculatedRate, 2);
+                
+                lock (LastRoomPrice)
+                {
+                    LastRoomPrice = price;
+                }
+                lock (box2)
+                {
+                    box2 = (int)box2- orderModel.GetAmt();
+                }
             }
         }
 
-        private double GetTodaysRoomPrice()
-        {
-            var today = DateTime.Now;
-
-            switch (today.DayOfWeek)
-            {
-                case DayOfWeek.Sunday:
-                    return BaseRoomPrice;
-
-                case DayOfWeek.Monday:
-                    return BaseRoomPrice - 5;
-
-                case DayOfWeek.Tuesday:
-                    return BaseRoomPrice - 10;
-
-                case DayOfWeek.Wednesday:
-                    return BaseRoomPrice - 5;
-
-                case DayOfWeek.Thursday:
-                    return BaseRoomPrice + 5;
-
-                case DayOfWeek.Friday:
-                    return BaseRoomPrice + 15;
-
-                case DayOfWeek.Saturday:
-                    return BaseRoomPrice + 15;
-            }
-
-            return BaseRoomPrice;
-        }
-
+        
         //KN: added this event
         public void PriceFunction()
         {
@@ -146,15 +107,32 @@ namespace HotelSupplierModel
 
             using (var bufferService = new MultiCellBufferServiceClient())
             {
-                while (NumberOfRoomsAvailable > 0)
-                {
-                    Thread.Sleep(1000);
 
+                while ((int)box < MaxNumberOfPriceCuts +1 )
+                {
+                    Thread.Sleep(100);
+                    lock (CurrentRoomPrice)
+                    {
+                        CurrentRoomPrice = new Pricing((int)box2);
+
+                    }
+                    lock (box)
+                    {
+                        if (CurrentRoomPrice.UnitPrice < LastRoomPrice.UnitPrice)
+                        {
+                            EmitPriceCutEvent();
+                            box = (int)box + 1;
+                        }
+                    }
                     string encodedOrder = bufferService.getOneCell();
                     SubmitOrder(encodedOrder);
-                    
-                    NumberOfRoomsAvailable--;
                 }
+                while (true)
+                {
+                    string encodedOrder = bufferService.getOneCell();
+                    SubmitOrder(encodedOrder);
+                }
+                   
             }
         }
 

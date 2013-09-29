@@ -19,12 +19,12 @@ namespace OrderModel
             {
                 double todayRate = GetTodaysRoomPrice();
 
-                double multiplier = Math.Sqrt(NumberOfRooms) * (1 / NumberOfRooms);
+                double multiplier = Math.Sqrt(NumberOfRooms) * (1 / NumberOfRooms+1);
 
                 double calculatedRate = todayRate + (todayRate * multiplier);
 
                 // Surprise price cut
-                if ((calculatedRate % 10) < 5)
+                if ((calculatedRate % 10) > 5)
                     calculatedRate = calculatedRate - 20;
 
                 return Math.Round(calculatedRate, 2);

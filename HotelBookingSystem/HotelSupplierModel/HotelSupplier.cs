@@ -24,7 +24,7 @@ namespace HotelSupplierModel
 
         private int _numberOfRoomsAvailable = 100;
 
-        private const int BaseRoomPrice = 100;
+        private const int BaseRoomPrice = 50;
 
         public readonly double TaxRate = 0.07;
         public readonly double LocationCharge = 10.0;
@@ -71,16 +71,22 @@ namespace HotelSupplierModel
             var orderThread = new Thread(threadStart);
             orderThread.Start();
 
-            if (price.UnitPrice < LastRoomPrice)
+            lock (price)
             {
-                if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
-                    return; // TODO needs to exit thread
+                if (price.UnitPrice < LastRoomPrice)
+                {
+                    if (NumberOfPriceCuts >= MaxNumberOfPriceCuts)
+                    {
+                        // REQ: The thread should stop when there are no more price cuts available
+                        Thread.CurrentThread.Abort();
+                    }
 
-                EmitPriceCutEvent();
-                NumberOfPriceCuts++;
+                    EmitPriceCutEvent();
+                    NumberOfPriceCuts++;
+                }
+
+                LastRoomPrice = price.UnitPrice;
             }
-
-            LastRoomPrice = price.UnitPrice;
         }
 
         public double UnitPrice
@@ -89,12 +95,12 @@ namespace HotelSupplierModel
             {
                 double todayRate = GetTodaysRoomPrice();
 
-                double multiplier = Math.Sqrt(NumberOfRoomsAvailable) * (1 / NumberOfRoomsAvailable);
+                double multiplier = Math.Sqrt(NumberOfRoomsAvailable) * (1 / (double)NumberOfRoomsAvailable) * 10;
 
                 double calculatedRate = todayRate + (todayRate * multiplier);
 
                 // Surprise price cut
-                if ((calculatedRate % 10) < 5)
+                if ((calculatedRate % 2) > 1)
                     calculatedRate = calculatedRate - 20;
 
                 return Math.Round(calculatedRate, 2);

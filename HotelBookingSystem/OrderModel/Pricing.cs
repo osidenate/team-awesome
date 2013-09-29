@@ -13,27 +13,11 @@ namespace OrderModel
         public readonly double LocationCharge = 10.0;
         public double NumberOfRooms;
 
-        public double UnitPrice
+        public double UnitPrice;
+
+        public Pricing(double CurrentUnitPrice)
         {
-            get
-            {
-                double todayRate = GetTodaysRoomPrice();
-
-                double multiplier = Math.Sqrt(NumberOfRooms) * (1 / NumberOfRooms);
-
-                double calculatedRate = todayRate + (todayRate * multiplier);
-
-                // Surprise price cut
-                if ((calculatedRate % 10) < 5)
-                    calculatedRate = calculatedRate - 20;
-
-                return Math.Round(calculatedRate, 2);
-            }
-        }
-
-        public Pricing(int numberOfRoomsAvailable)
-        {
-            NumberOfRooms = numberOfRoomsAvailable;
+            this.UnitPrice = CurrentUnitPrice;
         }
 
         private double GetTodaysRoomPrice()

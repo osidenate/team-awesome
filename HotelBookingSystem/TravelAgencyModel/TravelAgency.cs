@@ -28,7 +28,7 @@ namespace TravelAgencyModel
         public TravelAgency(HotelSupplier hotel, PerformanceTracker performanceTest)
         {
             myHotel = hotel;
-            CurrentPrice = myHotel.UnitPrice;
+            CurrentPrice = myHotel.CurrentUnitPrice;
             myPerformanceTracker = performanceTest;
         }
 
@@ -93,7 +93,7 @@ namespace TravelAgencyModel
             myPerformanceTracker.startClock(Int32.Parse(TravelAgencyId));
 
             // Order two rooms if there is a price cut, otherwise order one room
-            if (IsPriceCut(myHotel.UnitPrice))
+            if (IsPriceCut(myHotel.CurrentUnitPrice))
             {
                 Console.WriteLine("NOTICE: Additional rooms are being ordered due to a price cut event");
                 InitializeOrder(GenerateRandomCreditCardNumber(), 2);

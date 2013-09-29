@@ -67,7 +67,7 @@ namespace HotelSupplierModel
         public void SubmitOrder(string encodedOrder)
         {
             Order orderModel = Order.DecodeOrder(encodedOrder);
-            Pricing price = new Pricing(NumberOfRoomsAvailable);
+            Pricing price = new Pricing(CurrentUnitPrice);
             var orderProcessor = new OrderProcessor(orderModel, price.UnitPrice, price.TaxRate, price.LocationCharge, this);
             var threadStart = new ThreadStart(orderProcessor.process);
             var orderThread = new Thread(threadStart);
@@ -92,7 +92,7 @@ namespace HotelSupplierModel
             }
         }
 
-        public double UnitPrice
+        public double CurrentUnitPrice
         {
             get
             {
@@ -106,7 +106,9 @@ namespace HotelSupplierModel
                 if ((calculatedRate % 2) > 1)
                     calculatedRate = calculatedRate - 20;
 
-                return Math.Round(calculatedRate, 2);
+                double finalPrice = Math.Round(calculatedRate, 2);
+
+                return finalPrice;
             }
         }
 

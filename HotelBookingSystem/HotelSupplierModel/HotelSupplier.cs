@@ -147,7 +147,7 @@ namespace HotelSupplierModel
             {
                 while (NumberOfRoomsAvailable > 0)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(250);
 
                     string encodedOrder = bufferService.getOneCell();
                     SubmitOrder(encodedOrder);

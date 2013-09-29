@@ -70,7 +70,7 @@ namespace TravelAgencyModel
         {
             while (myHotel.NumberOfRoomsAvailable > 0)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
                 SubmitOrder();
             }
         }
@@ -91,9 +91,14 @@ namespace TravelAgencyModel
 
             // Order two rooms if there is a price cut, otherwise order one room
             if (IsPriceCut(myHotel.UnitPrice))
+            {
+                Console.WriteLine("NOTICE: Additional rooms are being ordered due to a price cut event");
                 InitializeOrder(GenerateRandomCreditCardNumber(), 2);
+            }
             else
+            {
                 InitializeOrder(GenerateRandomCreditCardNumber(), 1);
+            }
 
             myMultiCellBufferService.setOneCell(Order.EncodeOrder(myOrder));
         }

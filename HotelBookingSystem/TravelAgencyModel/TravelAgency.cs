@@ -97,7 +97,7 @@ namespace TravelAgencyModel
             {
                 OrderEnd = DateTime.Now;
                 myPerformanceTracker.stopClock(Int32.Parse(TravelAgencyId));
-                Console.WriteLine("Order " + senderId + " has completed");
+                Console.WriteLine("Travel Agency " + TravelAgencyId + " order has completed");
 
                
             }

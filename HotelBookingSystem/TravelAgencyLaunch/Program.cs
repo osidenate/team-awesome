@@ -65,6 +65,8 @@ namespace TravelAgencyLaunch
             {
                 hotelSupplierThread.Abort();
                 tracker.printPerfromancnceData();
+                Console.WriteLine("All Done");
+                Console.ReadLine();
             }
 
             
